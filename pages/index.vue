@@ -1,51 +1,39 @@
 <template>
   <div>
     <!--タイトル-->
-    <h1><input v-model="title" type="text" class="title" /></h1>
+    <div class="page-title">
+      <PageTitle />
+    </div>
     <!--メニュー-->
     <div class="hamburger-menu">
       <input id="menu-btn-check" type="checkbox" />
-      <label for="menu-btn-check" class="menu-btn"><span></span></label>
-      <div class="menu-content">
-        <div class="menuTask">
-          <span class="task-edit">タスク編集</span>
-          <hr style="margin: 10px 0 35px 0; color: black" />
-          <!--タスク一覧-->
-          <b-card
-            v-for="(task, index) in menuTaskList"
-            :key="task"
-            class="menu-task"
-          >
-            <!--期限日の追加ボタン-->
-            <input
-              v-model="date"
-              type="date"
-              class="date"
-              @change="addDeadLine(index)"
-            />
-            <!--タスク変更-->
-            <input v-model="taskList[index]" type="text" class="menu-task" />
-            <!--ゴミ箱ボタン-->
-            <button type="button" class="delete-btn">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-trash"
-                viewBox="0 0 16 16"
-                @click="deleteTask(index)"
-              >
-                <path
-                  d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                />
-                <path
-                  fill-rule="evenodd"
-                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                />
-              </svg>
-            </button>
-          </b-card>
+      <label for="menu-btn-check" class="menu-btn" @click="menuFlg = !menuFlg">
+        <span></span>
+      </label>
+      <div v-if="menuFlg">
+        <div class="menu-content">
+          <div>タスク編集</div>
+          <!--カレンダー-->
+          <button type="button" class="calendar-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar3"
+              viewBox="0 0 16 16">
+              <path
+                d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" />
+              <path
+                d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+            </svg>
+          </button>
+          <!--ゴミ箱-->
+          <button type="button" class="delete-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-trash"
+              viewBox="0 0 16 16">
+              <path
+                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+              <path fill-rule="evenodd"
+                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+            </svg>
+          </button>
+          <EditTodoListTile v-for="task in taskList" :key="task" :task="task" />
         </div>
       </div>
     </div>
@@ -54,93 +42,53 @@
       <TodoListTitle v-for="task in taskList" :key="task" :task="task" />
     </div>
     <!--完了済みタスクボタン-->
-    <button type="button" class="comp" @click="compTaskView">
-      {{ compTaskBtn }}
-    </button>
+    <div class="comp-btn">
+      <b-button @click="compFlg = !compFlg">
+        <!--閉じる-->
+        <svg v-if="!compFlg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-chevron-down" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+        </svg>
+        <!--開く-->
+        <svg v-if="compFlg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-chevron-up" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+        </svg>
+        完了済みタスク
+      </b-button>
+    </div>
     <!--完了済みタスク一覧-->
-    <div v-if="flg" class="comp-task-field">
-      <span v-for="compTask in compList" :key="compTask">
-        ・{{ compTask }}
-        <hr style="margin: 5px" />
-      </span>
+    <div v-if="compFlg" class="comp-list">
+      <CompletedTodoDrawer v-for="compTask in compList" :key="compTask" :compTask="compTask" />
     </div>
     <!--タスク追加-->
-    <div class="newTask">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="25"
-        height="25"
-        class="bi bi-plus-circle"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-        />
-        <path
-          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
-        />
-      </svg>
-      <input
-        v-model="newTask"
-        type="text"
-        placeholder="タスクの追加"
-        @keyup.enter="addTask(newTask)"
-      />
+    <div class="add-todo">
+      <AddTodoTask />
     </div>
   </div>
 </template>
 
 <script>
 import TodoListTitle from '../components/TodoListTitle.vue'
+import PageTitle from '../components/PageTitle.vue'
+import CompletedTodoDrawer from '../components/CompletedTodoDrawer.vue'
+import AddTodoTask from '../components/AddTodoTask.vue'
+import EditTodoListTile from '../components/EditTodoListTile.vue'
 export default {
   name: 'IndexPage',
-  components: { TodoListTitle },
+  components: { TodoListTitle, PageTitle, CompletedTodoDrawer, AddTodoTask, EditTodoListTile },
   data() {
     return {
-      title: 'Title',
-      flg: false,
-      taskList: [],
-      compList: [],
-      menuTaskList: [],
-      compTaskBtn: '⇩完了済みタスク',
-      date: null,
+      taskList: ["ほげほげする", "ふがふがする",],
+      compList: ["ぴよぴよする", "ぱたぱたする"],
+      compFlg: false,
+      menuFlg: false,
     }
   },
   methods: {
-    addTask(newTask) {
-      if (newTask === '') {
-        return
-      }
-      this.taskList.unshift(newTask)
-      this.menuTaskList.unshift(newTask)
-      this.newTask = ''
-    },
-    checkTask(index) {
-      this.compList.push(this.taskList[index])
-      this.menuTaskList.splice(index, 1)
-      this.taskList.splice(index, 1)
-    },
-    compTaskView() {
-      if (this.flg) {
-        this.flg = false
-        this.compTaskBtn = '⇩完了済みタスク'
-        return
-      }
-      this.flg = true
-      this.compTaskBtn = '⇧完了済みタスク'
-    },
-    addDeadLine(index) {
-      this.taskList[index] = this.taskList[index] + '  :  ' + this.date
-    },
-    deleteTask(index) {
-      const result = confirm(
-        '「 ' + this.taskList[index] + ' 」を削除しますか？'
-      )
-      if (result) {
-        this.taskList.splice(index, 1)
-        this.menuTaskList.splice(index, 1)
-      }
-    },
+
   },
 }
 </script>
@@ -149,15 +97,7 @@ export default {
 body {
   width: 1200px;
   margin: 0 auto;
-  background: gray;
-}
-
-.title {
-  background: gray;
-  font-size: 80px;
-  border: none;
-  outline: none;
-  width: 1150px;
+  background: lightpink;
 }
 
 .menu-btn {
@@ -196,16 +136,16 @@ body {
   top: 8px;
 }
 
-#menu-btn-check:checked ~ .menu-btn span {
+#menu-btn-check:checked~.menu-btn span {
   background-color: rgba(255, 255, 255, 0);
 }
 
-#menu-btn-check:checked ~ .menu-btn span::before {
+#menu-btn-check:checked~.menu-btn span::before {
   bottom: 0;
   transform: rotate(45deg);
 }
 
-#menu-btn-check:checked ~ .menu-btn span::after {
+#menu-btn-check:checked~.menu-btn span::after {
   top: 0;
   transform: rotate(-45deg);
 }
@@ -220,87 +160,20 @@ body {
   height: 890px;
   position: fixed;
   top: 15px;
-  right: -350px;
+  right: 0;
   z-index: 1;
-  border: 3px solid floralwhite;
-  background-color: floralwhite;
-  transition: all 0.3s;
-}
-
-#menu-btn-check:checked ~ .menu-content {
-  right: 0%;
-}
-
-.menu-task {
-  background: floralwhite;
-  width: 320px;
-  margin-bottom: 8px;
-}
-
-.menuTask input[type='text'] {
-  width: 230px;
   font-size: 20px;
-  border: none;
-  background: floralwhite;
-}
-
-.task-edit {
-  font-size: 25px;
+  padding: 5px;
+  background-color: floralwhite;
 }
 
 .task-list {
   overflow-y: scroll;
-  height: 725px;
+  height: 700px;
 }
 
 .card-body {
   padding: 0 0 0 0;
-}
-
-input[type='checkbox'] {
-  transform: scale(1.7);
-  border-radius: 50%;
-  margin: 0 15px 13px 15px;
-}
-
-.newTask {
-  position: absolute;
-  top: 850px;
-  width: 1150px;
-  height: 50px;
-  padding-left: 8px;
-  background: white;
-}
-
-.newTask input[type='text'] {
-  font-size: 20px;
-  width: 1100px;
-  height: 48px;
-  border: none;
-  outline: none;
-}
-
-.comp {
-  position: absolute;
-  left: 10px;
-  top: 15px;
-  border: none;
-  width: 190px;
-  font-size: 22px;
-  border-radius: 5px;
-  background: floralwhite;
-}
-
-.comp-task-field {
-  overflow-y: scroll;
-  position: absolute;
-  left: 10px;
-  top: 55px;
-  height: 850px;
-  width: 320px;
-  font-size: 20px;
-  border-radius: 5px;
-  background: floralwhite;
 }
 
 .bi,
@@ -308,17 +181,28 @@ input[type='checkbox'] {
   margin-bottom: 6px;
 }
 
+.comp-btn {
+  position: absolute;
+  top: 75px;
+  left: 10px;
+}
+
+.comp-list {
+  position: absolute;
+  overflow-y: scroll;
+  background: floralwhite;
+  top: 120px;
+  left: 10px;
+  width: 330px;
+  height: 780px;
+}
+
 .delete-btn {
-  border: none;
   background: floralwhite;
 }
 
-.date {
-  text-align: right;
-  font-size: 30px;
-  width: 35px;
-  height: 30px;
-  border: none;
+.calendar-btn {
   background: floralwhite;
+  margin: 10px 20px 13px 5px;
 }
 </style>
