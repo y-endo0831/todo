@@ -21,20 +21,20 @@
             </svg>
           </button>
           <input type="date" class="calendar" v-model="date" @change="addDateLimit()">
-          <!--ゴミ箱-->
-          <button type="button" class="delete-btn" @click="deleteTask()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-trash" style="margin-bottom:3px" viewBox="0 0 16 16" >
-              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-            </svg>
-          </button>
           <!--時計-->
           <button type="button" class="time-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16" style="margin-bottom:3px">
               <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
               <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
             </svg>
-            <input type="time" class="time" v-model="date" @change="addTimeLimit()">
+            <input type="time" class="time" v-model="time" @change="addTimeLimit()">
+          </button>
+          <!--ゴミ箱-->
+          <button type="button" class="delete-btn" @click="deleteTask()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-trash" style="margin-bottom:3px" viewBox="0 0 16 16" >
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+            </svg>
           </button>
           <!--メニュータスク一覧-->
           <EditTodoListTile v-for="todo in uncompletedTodoList" :key="todo.id" :todo="todo"/>
@@ -94,6 +94,9 @@ export default {
     addDateLimit(){
       this.$store.commit('todo/addDateLimit',this.date);
     },
+    addTimeLimit(){
+      this.$store.commit('todo/addTimeLimit',this.time);
+    }
 
   },
   computed:{
@@ -206,12 +209,12 @@ body {
 }
 
 .delete-btn {
-  background: floralwhite;
-  margin-right:20px;
+  background: rgb(255, 115, 115);
+  margin-left:150px;
 }
 .calendar-btn {
   background: floralwhite;
-  margin: 10px 20px 15px 5px;
+  margin: 15px 20px 15px 5px;
 }
 .time-btn{
   background: floralwhite;
@@ -229,7 +232,7 @@ body {
 .time{
   position: absolute;
   top:44px;
-  right:138px;
+  right:211px;
   width:47px;
   height:45px;
   font-size: 35px;

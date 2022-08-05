@@ -7,8 +7,10 @@
       @change="compTask(todo)" />
 
     <span class="title">{{ todo.title }}</span>
-    <span class="limit">期限日：{{todo.date}}</span>&emsp;
-    <span class="time">時間：{{todo.time}}</span>
+    <span class="limit">
+      期限日：{{todo.date}}&emsp;
+      時間：{{todo.time}}
+    </span>
   </div>
 </template>
 
@@ -32,7 +34,6 @@ export default {
 <style scoped>
 .task {
   display: flex;
-  justify-content: space-between;
   width: 1150px;
   height: 43px;
   margin-bottom: 8px;
@@ -48,8 +49,7 @@ export default {
   margin-right: auto;
   font-size: 25px;
 }
-.limit,.time{
-  display: inline-block;
+.limit{
   font-size: 15px;
   margin-top: 20px;
 }

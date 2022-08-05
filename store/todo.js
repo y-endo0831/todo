@@ -47,5 +47,13 @@ export const mutations = {
                 state.todoList[i].date = date;
             }
         }
+    },
+    // 期限時間追加
+    addTimeLimit(state, time){
+        for(let i = 0;i < state.todoList.length;i++){
+            if(state.todoList[i].checkFlg){
+                state.todoList[i].time = time;
+            }
+        }
     }
 }
