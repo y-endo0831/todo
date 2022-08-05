@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card class="comp-task">
-      <span>・{{ compTask }}</span>
+      <span>・{{ todo.title }}</span>
     </b-card>
   </div>
 </template>
@@ -10,8 +10,8 @@
 export default {
   name: 'CompletedTodoDrawer',
   props: {
-    compTask: {
-      type: String,
+    todo: {
+      type: Object,
       required: true,
     },
   },

@@ -46,5 +46,6 @@ export default {
   font-size: 80px;
   width:1150px;
   height:100px;
+  background: lightpink;
 }
 </style>

@@ -1,34 +1,56 @@
 <template>
-  <b-card class="task">
-    <!-- TODO チェック後の処理は最後に行う(まずは静的なレイアウトを作成) -->
-    <input type="checkbox" class="task-checkbox" />
-    <span>{{ task }}</span>
-  </b-card>
+  <div class="task">
+    <input 
+      :checked="todo.completion" 
+      type="checkbox" 
+      class="task-checkbox"
+      @change="compTask(todo)" />
+
+    <span class="title">{{ todo.title }}</span>
+    <span class="limit">期限日：{{todo.date}}</span>&emsp;
+    <span class="time">時間：{{todo.time}}</span>
+  </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'TodoListTile',
   props: {
-    task: {
-      type: String,
+    todo: {
+      type: Object,
       required: true,
     },
   },
+  methods:{
+    ...mapMutations('todo',['compTask']),
+  }
 }
 </script>
 
 <style scoped>
 .task {
-  font-size: 25px;
+  display: flex;
+  justify-content: space-between;
   width: 1150px;
-  height: auto;
+  height: 43px;
   margin-bottom: 8px;
   background: floralwhite;
 }
 .task-checkbox {
+  margin-right: auto;
   transform: scale(1.7);
-  border-radius: 50%;
-  margin: 0 15px 13px 15px;
+  margin: 12px 15px 13px 15px;
+}
+.title{
+  display: inline-block;
+  margin-right: auto;
+  font-size: 25px;
+}
+.limit,.time{
+  display: inline-block;
+  font-size: 15px;
+  margin-top: 20px;
 }
 </style>
